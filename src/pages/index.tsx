@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 
 import styles from '../styles/pages/Login.module.css';
 
+
 export default function Login() {
   const [userInfoToHome, setUserInfoToHome] = useState(null);
 
@@ -11,8 +12,9 @@ export default function Login() {
 
   const handleSubmit = data => {
     data.preventDefault();
+
     if(userInfoToHome) {
-      push(`/${userInfoToHome}`);
+        push(`/${userInfoToHome}`);
     }
   }
 

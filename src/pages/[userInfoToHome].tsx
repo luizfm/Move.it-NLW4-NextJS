@@ -1,5 +1,7 @@
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import { HiMoon, HiSun } from 'react-icons/hi'
+import { useContext, useState } from 'react';
 
 import { ChallengeProvider } from '../contexts/ChallengesContext';
 import { ChallengeBox } from '../components/ChallengeBox';
@@ -23,31 +25,55 @@ interface userInfoToHomeProps {
 }
 
 import styles from '../styles/pages/userInfoToHome.module.css';
+import { ToggleThemeContext } from '../contexts/ToggleThemeContext';
 
 export default function userInfoToHome({ user, level, currentExperience, challengesCompleted }: userInfoToHomeProps) {
+  const { themeToggler, theme } = useContext(ToggleThemeContext);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const handleThemeToggler = () => {
+    isDarkMode ? setIsDarkMode(false) : setIsDarkMode(true)
+    themeToggler();
+  }
+
+  const handleIconShowed = () => {
+    return isDarkMode ? <HiSun color="#a69a1f" size={24} /> : <HiMoon color="#2E384D" size={24} />
+  }
 
   return (
     <ChallengeProvider level={level} currentExperience={currentExperience} challengesCompleted={challengesCompleted} >
       <div className={styles.container}>
-        <Head>
-          <title>Início | move.it</title>
-        </Head>
+        <div className={styles.sidebar}>
+          <a href="/">
+            <img src="/logo.svg" alt="Logo to home" />
+          </a>
 
-        <ExperienceBar />
+          <button onClick={handleThemeToggler}>
+            {handleIconShowed()}
+          </button>
+        </div>
 
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile userInfo={user}/>
-              <CompletedChallenges />
-              <Countdown />
-            </div>
+        <div className={styles.content}>
+          <Head>
+            <title>Início | move.it</title>
+          </Head>
 
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
+          <ExperienceBar />
+
+          <CountdownProvider>
+            <section>
+              <div>
+                <Profile userInfo={user}/>
+                <CompletedChallenges />
+                <Countdown />
+              </div>
+
+              <div>
+                <ChallengeBox />
+              </div>
+            </section>
+          </CountdownProvider>
+        </div>
       </div>
     </ChallengeProvider>
   )
