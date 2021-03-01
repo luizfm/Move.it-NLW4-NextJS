@@ -1,0 +1,92 @@
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    padding: 1rem;
+
+    background: url('/logo-bg.svg') no-repeat, var(--blue);
+}
+
+.container .loginContainer {
+    width: 50%;
+    margin-left: 55%;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.loginContainer img {
+    color: var(--white);
+    height: 50px;
+    align-self: flex-start;
+}
+
+.loginContainer strong {
+    margin: 3rem 0 1rem;
+    color: var(--white);
+
+    font-size: 1.25rem;
+}
+
+.loginContainer div {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0.75rem;
+}
+
+.loginContainer div img {
+    height: 1.5rem;
+    margin-right: 0.5rem;
+    color: #fff;
+}
+
+.loginContainer div p {
+    color: var(--white);
+    font-size: 1rem;
+}
+
+.formContainer {
+    display: flex;
+
+    height: 3rem;
+    width: 8rem;
+}
+
+.formContainer input {
+    border: 0 none;
+    flex: 1;
+    padding: 0.5rem;
+
+    background: linear-gradient(90deg, #4953b8 0%, rgba(76, 85, 182, 0.2) 100%);
+    border-radius: 5px 0 0 5px;
+
+    color: var(--background);
+}
+
+.formContainer input::placeholder {
+    color: var(--background);
+    padding: 0.25rem;
+}  
+
+.formContainer button {
+    margin-left: 1rem;
+    background: var(--blue-dark);
+
+    padding: 0.25rem;
+
+    border: none;
+    border-radius: 5px;
+
+    transition: background 0.2s;
+}
+
+.formContainer button:hover {
+    background: var(--blue);
+}
+
+.formContainer button img {
+    height: 22px;
+    margin-top: 4px;
+    margin-left: 6px;
+}

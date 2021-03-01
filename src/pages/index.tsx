@@ -1,59 +1,51 @@
 import Head from 'next/head';
-import { GetServerSideProps } from 'next';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 
-import { ChallengeProvider } from '../contexts/ChallengesContext';
-import { ChallengeBox } from '../components/ChallengeBox';
-import { CompletedChallenges } from "../components/CompletedChallenges";
-import { Countdown } from "../components/Countdown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import { Profile } from "../components/Profile";
-import { CountdownProvider } from '../contexts/CountdownContext';
+import styles from '../styles/pages/Login.module.css';
 
-import styles from '../styles/pages/Home.module.css';
+export default function Login() {
+  const [userInfoToHome, setUserInfoToHome] = useState(null);
 
-interface HomeProps {
-  level: number;
-  currentExperience: number;
-  challengesCompleted: number;
-}
+  const { push } = useRouter();
 
-export default function Home({ level, currentExperience, challengesCompleted }: HomeProps) {
-
-  return (
-    <ChallengeProvider level={level} currentExperience={currentExperience} challengesCompleted={challengesCompleted} >
-      <div className={styles.container}>
-        <Head>
-          <title>Início | move.it</title>
-        </Head>
-
-        <ExperienceBar />
-
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompletedChallenges />
-              <Countdown />
-            </div>
-
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
-    </ChallengeProvider>
-  )
-}
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { level, currentExperience, challengesCompleted } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesCompleted: Number(challengesCompleted)
+  const handleSubmit = data => {
+    data.preventDefault();
+    if(userInfoToHome) {
+      push(`/${userInfoToHome}`);
     }
   }
+
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Login | Move.it</title>
+      </Head>
+
+      <div className={styles.loginContainer}>
+        <img src="/logo-full.svg"/>
+
+        <strong>Bem-vindo</strong>
+
+        <div>
+          <img src="/icons/github.svg" />
+
+          <p>Faça seu login com o Github</p>
+        </div>
+
+        <form onSubmit={handleSubmit}>
+          <div className={styles.formContainer}>
+            <input 
+              placeholder="Usuário do github"
+              onChange={(e) => setUserInfoToHome(e.target.value)}
+            />
+
+            <button type="submit">
+              <img src="/icons/right-arrow.svg" alt="Login button" />
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
 }
